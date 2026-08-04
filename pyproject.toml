@@ -1,0 +1,10 @@
+[project]
+name = "claimkit"
+version = "0.1.0"
+description = "Research toolkit for AI agents — cited findings, explicit hypotheses, backed actions"
+readme = "README.md"
+requires-python = ">=3.11"
+
+[project.urls]
+Homepage = "https://github.com/TheLampshady/claimkit"
+Repository = "https://github.com/TheLampshady/claimkit"

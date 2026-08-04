@@ -1,0 +1,14 @@
+{
+  "name": "claimkit-marketplace",
+  "owner": {
+    "name": "Lampshady",
+    "email": "lampshady24@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "claimkit",
+      "source": "./",
+      "description": "Research that backs the work. Sorts every claim into a cited finding or an explicit hypothesis, tracks which actions each one backs, and keeps the record honest as it's revised — so the reasons behind what you built are still checkable a year later. Writes to docs/research/, with an optional per-repo charter for scope and evidence standards."
+    }
+  ]
+}
