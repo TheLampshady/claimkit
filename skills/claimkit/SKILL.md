@@ -28,7 +28,7 @@ Skip when:
 
 A repo may carry a research charter at `docs/research/CHARTER.md` — a static frame doc stating what research here is *for*, what's already ruled out, which rails to work in, and what counts as good enough evidence to act on. Charters are authored per-repo; this skill is user-level and ships only the instructions and the field spec at `references/charter-template.md`.
 
-**Read a charter for frame; never cite it as a source.** It states the question, so it is not evidence: it never appears in the Sources table and never grounds a claim. The stand-alone rule under Output principles is unaffected.
+**Read a charter for frame; never cite it as a source.** It states the question, so it is not evidence: it never appears in the Sources table and never grounds a claim. It is not importable as a hypothesis either — the import rule carries positions across docs, and the charter holds no positions. The stand-alone rule under Output principles is unaffected.
 
 When there's no charter, say so once and carry on. Never block research to create one.
 
@@ -81,6 +81,8 @@ Take notes as you go: URL, the key claim, and your confidence in the source.
 **Check whether the user's hypotheses are already tested.** Before a working position gets marked **(project hypothesis)**, spend one search seeing if the literature already validates or refutes it. If it does, it's not a hypothesis — it's a finding (or a dead idea), cited like any other, and the user just saved an experiment. Record what you searched: it becomes the hypothesis's **Unsourced because** line.
 
 On a re-run against an existing doc, do this for the hypotheses already sitting at *open* too. That search is the only thing that can promote one to a finding, so it's the highest-value few minutes of a repeat run.
+
+**Mine sibling docs for positions, never for evidence.** Other docs under `docs/research/` can hold hypotheses developed with the user that exist nowhere else — read them for leads, and for positions worth importing under the rules in the Hypotheses section. Every citation in them is a lead too: chase it to its primary and cite that. Nothing in a sibling doc is evidence.
 
 ### Phase 3 — Alignment interview (questions informed by what you found)
 
@@ -149,8 +151,16 @@ Positions developed with the user rather than found in literature: unmeasured, a
 Three statuses, and only three:
 
 - ***open*** — untested.
-- ***validated in-project*** / ***refuted in-project*** — the check ran; record what happened. This does **not** make it a finding. A finding is something a reader verifies by clicking a link, and the stand-alone rule means the next doc can't cite this one.
+- ***validated in-project*** / ***refuted in-project*** — the check ran; record what happened. This does **not** make it a finding. A finding is something a reader verifies by clicking a link, and the stand-alone rule means the next doc can only import this one, never cite it.
 - ***promoted to finding*** — an external verified source turned up. Move the claim into Key findings with its citation and leave a one-line pointer here. Only an external source can do this.
+
+**Imported positions.** A position developed in an earlier doc under `docs/research/` exists nowhere else, so carry it into this one rather than losing it — but carry the *content*, not a pointer:
+
+**H7 — <the position, restated here in full — never "see the position in the other doc">** · *open* · added YYYY-MM-DD
+- **Unsourced because:** Position developed in `<origin-slug>-research.md` (H3); searched <what> for external work on it, found none.
+- **Check:** <the concrete check> — ran there → <outcome>; not re-run in this context.
+
+Four constraints, and they're what keep the import honest. It gets a **new ID in this doc's sequence** — never the origin's number, since IDs are local and permanent. Its status **starts at *open***: the origin's outcome is history recorded on the `Check:` line, not a status this doc asserts, so two copies can't drift into two live statuses. Its **citations don't come along** — chase those to their primaries. And an import is **a hypothesis by definition**: the origin doc, whatever it says and however long it has said it, can never move a claim into Key findings.
 
 A hypothesis with no Action pointing at it doesn't belong in this section — you hold a position but have no stake in it. That's an Open question.
 
@@ -188,13 +198,14 @@ Actions are a queue, not a record. Once an action is built and its hypothesis ha
 <Gaps you couldn't close, contested claims between sources, follow-ups worth pursuing later. This is the home for questions you hold no position on — take a position and it's a hypothesis; act on it and it's an action. Honesty here is more valuable than fake completeness.>
 ```
 
-**Before you report the path, check the structure.** Five checks, all mechanical:
+**Before you report the path, check the structure.** Six checks, all mechanical:
 
 1. All eight `##` headings present, in order, plus the Summary's three subsections. An empty one says "None" and why.
 2. Every action has a non-empty `Because:`.
 3. Every hypothesis is named by at least one action's `Because:`. If not, it moves to Open questions.
 4. Nothing in Key findings lacks a citation or an absence-claim label.
 5. No claim, position, or action appears in two sections. The Summary is the exception — it restates by design.
+6. Nothing depends on a sibling doc. A sibling may be named in exactly two places — the attribution inside an imported hypothesis's `Unsourced because:` and `Check:` lines — and nowhere else: not in Sources, not in a Key finding, not in an action's `Because:`, and never as a Markdown link. (The header's **Charter:** pointer is the one exception, and it backs nothing.) Every import must read correctly with the origin file deleted.
 
 ### Phase 5 — Charter reconciliation
 
@@ -213,9 +224,9 @@ Runs *after* the doc is on disk, never before. A charter edit made first would c
 ## Output principles
 
 - **Cite inline.** Every claim derived from research links to its source. The reader should be able to verify any specific point in one click.
-- **Separate findings from hypotheses, and only a source moves one across.** Every claim either cites an external primary source or lives in the Hypotheses section as a position developed with the user — unmeasured, to be validated. Never let the two blend: a fluent unsourced claim reads as fact and will be treated as one by every future reader, human or agent. Absence-of-evidence claims ("no published benchmark exists") are uncitable by nature — label them as absence claims rather than leaving them bare. **Promotion is one-directional and source-gated:** a hypothesis becomes a finding only when an external verified source turns up. The user's own experiment doesn't promote it — that's *validated in-project*, which stays in Hypotheses, because a finding is something the reader checks by clicking and the stand-alone rule bars the next doc from citing this one.
+- **Separate findings from hypotheses, and only a source moves one across.** Every claim either cites an external primary source or lives in the Hypotheses section as a position developed with the user — unmeasured, to be validated. Never let the two blend: a fluent unsourced claim reads as fact and will be treated as one by every future reader, human or agent. Absence-of-evidence claims ("no published benchmark exists") are uncitable by nature — label them as absence claims rather than leaving them bare. **Promotion is one-directional and source-gated:** a hypothesis becomes a finding only when an external verified source turns up. The user's own experiment doesn't promote it — that's *validated in-project*, which stays in Hypotheses, because a finding is something the reader checks by clicking and the stand-alone rule lets the next doc import this only as a hypothesis, never cite it as evidence.
 - **Each section owns exactly one thing.** Overlap is what let the last generation of these docs say the same thing four times in four voices. *Key findings* owns sourced claims. *Hypotheses* owns unsourced positions. *How this applies* owns interpretation — no new claims, no build steps. *Actions* owns build steps — no argument, no evidence. *Decisions* owns what was ruled out. *Open questions* owns what has no position yet. *Summary* may restate anything and originates nothing. When a sentence would fit two sections, it belongs to the narrower one and the other section points at it by ID.
-- **The doc must stand alone.** Never cite other research docs previously written in this project — they are conclusions, not sources: possibly unverified, and liable to be deleted or rewritten, leaving dangling references. Mine them for *leads*, then chase each lead to its primary source and cite that. If the primary can't be verified, the claim inherits hypothesis or absence-claim status.
+- **The doc must stand alone.** Never cite other research docs previously written in this project — they are conclusions, not sources: possibly unverified, and revised in place, so a pointer to one goes stale without anyone seeing it. A prior doc never appears in the Sources table and never backs a Key finding. Two things follow. **Never relay its citations:** mine it for *leads*, chase each lead to its primary source, cite that. If the primary can't be verified, the claim inherits hypothesis or absence-claim status. **Import its original positions instead of pointing at them:** a hypothesis developed with the user exists nowhere but that doc, so restate it here in full as a new local hypothesis naming the origin as attribution, never as a dependency. Delete the origin and this doc still reads correctly — that's the test for whether it stands alone.
 - **The Actions section is the spine, not the appendix.** The research exists to back the actions the user wants to take; everything else is that backing. Write the doc so Actions could be lifted out and executed, and so every other section is traceable to something in it.
 - **Sections have different readers, so they have different rules.** *Summary* travels on its own — complete without the rest of the doc, plain, and short enough to read in a minute. *Actions* is read by an agent doing the work — name the file, state the change. *Key findings, Hypotheses, Sources, Open questions* are for the author later — keep the full nuance, the caveats, and the contested bits; do not simplify these for an imagined general reader. This is a rule about self-containment and precision, not tone: no section gets vaguer than the evidence it rests on, and the Summary's plainness never softens a claim the body states sharply.
 - **Don't pad.** Four well-supported findings beat seven thin ones. Filler signals weak research.
@@ -235,5 +246,6 @@ Runs *after* the doc is on disk, never before. A charter edit made first would c
 - Don't promote a hypothesis on the strength of your own reasoning, however good the argument. Only an external verified source moves it to Key findings; a plausible mechanism argued from first principles is exactly what these markers exist to contain.
 - Don't replace or fork an existing research doc on the same topic. Revise in place — the accumulated hypotheses and their statuses are the record, and a dated copy just creates two docs that both look current.
 - Don't renumber H or A IDs, ever. Other sections, later docs, and commit messages point at them.
+- Don't cross-link research docs. Importing a prior doc's position means restating it in full as a new local hypothesis; a live pointer to `<other>-research.md` breaks the next time that doc is revised in place, and the claim is then resting on nothing.
 - Don't block research on a missing charter. The Phase 1 note is one line and needs no answer — say it and keep moving. Offering to build a charter mid-request is a detour, not a service.
 - Don't graduate a hypothesis into the charter. Phase 5 accepts sourced findings only; a position the research invented does not become the frame the next research reads.

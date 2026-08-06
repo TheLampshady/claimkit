@@ -11,6 +11,7 @@ Docs under `docs/research/` accumulate over months. The valuable part isn't the 
 3. **Never move a claim from Hypotheses to Key findings without a citation.** Promotion needs an external verified source. Your own reasoning doesn't qualify, and neither does a successful in-project experiment — that's a status change, not a promotion.
 4. **Never fill a citation you didn't verify.** A plausible-looking reference for a real claim is worse than no reference: it's unfalsifiable to every later reader and it launders a guess into evidence.
 5. **Confirm before deleting anything under `docs/research/`.** Say which file and what it contained. These docs are usually the only copy of reasoning that was never written down anywhere else.
+6. **Never make one doc depend on another.** No doc cites a sibling as a source or points at its H-IDs — siblings are conclusions, and they get revised in place, so the pointer rots silently. A position developed in an earlier doc *can* be carried forward, by restating it in full as a new local hypothesis that names the origin as attribution: new local ID, status starts at *open*, prior outcome recorded as history on the `Check:` line, citations chased to their own primaries. An import is a hypothesis by definition — no sibling doc can put a claim in Key findings.
 
 ## The charter
 

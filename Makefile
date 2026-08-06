@@ -23,10 +23,10 @@ hooks: ## Install pre-commit hooks
 
 .PHONY: claude
 claude: ## Reinstall this repo as a Claude plugin (local scope) — safe to re-run
-	@claude plugin uninstall claimkit --scope local >/dev/null 2>&1 || true
-	@claude plugin marketplace add $(PWD) --scope local >/dev/null
+	@claude plugin uninstall claimkit >/dev/null 2>&1 || true
+	@claude plugin marketplace add $(PWD) >/dev/null
 	@claude plugin marketplace update claimkit-marketplace >/dev/null
-	claude plugin install claimkit@claimkit-marketplace --scope local
+	claude plugin install claimkit@claimkit-marketplace
 
 # ── Validation ────────────────────────────────────────────────────────────────
 

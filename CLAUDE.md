@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Claimkit's premise: **research is only useful later if you can still tell what was evidence and what was a guess.** One skill enforces that split and keeps it honest as the doc is revised.
 
-Every claim it writes is a **finding** (cites an external primary source) or a **hypothesis** (doesn't — a position developed with the user, carrying the check that would settle it). Every action names its backing. Promotion is source-gated and one-directional: only an external verified source moves a hypothesis into findings. A successful in-project experiment gets *validated in-project*, which is a status change, not a promotion — a finding is something the next reader verifies by clicking a link, and these docs are barred from citing each other.
+Every claim it writes is a **finding** (cites an external primary source) or a **hypothesis** (doesn't — a position developed with the user, carrying the check that would settle it). Every action names its backing. Promotion is source-gated and one-directional: only an external verified source moves a hypothesis into findings. A successful in-project experiment gets *validated in-project*, which is a status change, not a promotion — a finding is something the next reader verifies by clicking a link, and these docs are barred from citing each other. One doc can *import* another's position, but only back into hypotheses — never as evidence.
 
 That asymmetry is the whole design. Loosen it and the skill degrades into a summarizer that launders its own guesses into evidence, which is the failure it exists to prevent.
 
@@ -70,7 +70,7 @@ An empty section says "None" and why — never delete the heading. A missing sec
 - **Promotion is source-gated.** See "What This Repo Is". This is the load-bearing invariant; any change that lets the skill promote on its own reasoning breaks the plugin's reason to exist.
 - **Every action carries a non-empty `Because:`.** Empty means an unwritten belief is doing the work.
 - **Docs are revised in place.** No replace, no dated fork. The accumulated hypotheses are the record.
-- **The doc stands alone.** It never cites another doc in `docs/research/` — those are conclusions, not sources. Mine them for leads, then cite the primary.
+- **The doc stands alone.** It never cites another doc in `docs/research/` — those are conclusions, not sources, and they're revised in place, so a pointer rots unseen. Mine them for leads, then cite the primary. A position from an earlier doc may be **imported** (restated in full as a new local hypothesis, new ID, status *open*, origin credited, its citations chased to their own primaries) — that's how reasoning existing nowhere else survives without creating a dependency. Imports arrive as hypotheses and stay hypotheses.
 - **Never invent a citation, and never invent rationale.** A fabricated reference is unfalsifiable to every later reader. If a claim can't be sourced, it's a hypothesis; if a reason isn't known, it stays absent.
 
 ### Progressive disclosure
