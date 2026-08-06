@@ -1,15 +1,20 @@
 ---
 name: claimkit
-description: 'Research a concept thoroughly by doing web searches and interviewing the user to align findings with their specific goal, then write a structured reference document at docs/research/<concept>-research.md. Use this skill whenever the user asks to: research X, look into X, get up to speed on X, learn about X for a project, write up findings on X, find sources on X, or do homework on a topic. Especially trigger when the request is open-ended and the user has a specific situation (scale, stack, constraints, deadline) the findings need to align with — that alignment work is the point. Also has a charter setup mode — use when asked to set up a research charter, define research goals or scope or rails for a repo, or update the charter. Skip for one-shot "what is X" questions you can answer directly without sources, and skip for library-API lookups where a documentation lookup alone is sufficient.'
+description: 'Research a concept thoroughly by doing web searches and interviewing the user to align findings with their specific goal, then write a structured reference document at docs/research/<concept>-research.md. Use this skill whenever the user asks to: research X, look into X, get up to speed on X, learn about X for a project, write up findings on X, find sources on X, or do homework on a topic. Especially trigger when the request is open-ended and the user has a specific situation (scale, stack, constraints, deadline) the findings need to align with — that alignment work is the point. Also has a charter setup mode — use when asked to set up a research charter, define research goals or scope or rails for a repo, or update the charter — and a review mode, for: recheck the sources, is this doc still accurate, has anything been proven since. Skip for one-shot "what is X" questions you can answer directly without sources, and skip for library-API lookups where a documentation lookup alone is sufficient.'
 user-invocable: true
-argument-hint: "[topic | charter]"
+argument-hint: "[topic | charter | review]"
 ---
 
 # claimkit
 
-The user wants to **understand a concept well enough to act on it**. The output is a structured doc at `docs/research/<slug>-research.md` that backs the actions they intend to take with either a cited source or an explicit, checkable hypothesis.
+The user wants to **understand a concept well enough to act on it**. The output is a doc at `docs/research/<slug>-research.md` where nothing is asserted without saying what it rests on.
 
-Every claim in that doc is one of two things, and the difference is load-bearing: a **finding** cites an external primary source, and a **hypothesis** doesn't — it's a position developed with the user, unmeasured, carrying the check that would settle it. Only an external source promotes the second into the first. Sorting claims that way, and keeping the sort honest as the doc is revised over months, is what this skill is for. The value comes from the *alignment* between general findings and the user's particular goal, never from a generic Wikipedia-style summary.
+One rule generates the rest: **a claim is sorted by its backing, and only backing moves it.**
+
+- **Claim** — a proposition. Backed by an external source it's a **finding**; backed by nothing it's a **hypothesis**, and it carries the check that would settle it.
+- **Action** — a build step, not a claim. It can't be true or false, so it names the claims that make it worth taking.
+
+Your reasoning is not backing. The user's own experiment is not backing. Another doc in `docs/research/` is not backing. Keeping that sort honest as the doc is revised over months is the job — and the value is aligning findings to *this* user's goal, never a Wikipedia-style summary.
 
 ## When to use
 
@@ -39,6 +44,16 @@ Triggered by "set up a research charter", "define our research goals / scope / r
 This mode writes `docs/research/CHARTER.md` and does nothing else. Don't fold a research request into it; if the user asked for both, write the charter, confirm it, then begin the research run fresh against it.
 
 **Read `references/charter-template.md` before asking anything.** It carries the six fields, the four-step interview, the defaults for the drafted fields, and the three fields that were deliberately cut. Don't improvise the interview from this section — the procedure lives there because it only matters here, and getting the ask-three/draft-three split right is most of the value.
+
+## Review mode
+
+Triggered by "review the research doc", "recheck the sources", "is this still accurate", "has anything been proven since", "check for newer findings".
+
+Re-checks an existing doc's claims against the world instead of researching the topic again: do the cited sources still exist and still say this, and has anything been published that settles an open hypothesis? A doc that stops being correct gives off no signal, so nobody performs this unprompted — which is the reason it's a mode rather than a suggestion.
+
+**Read `references/review-mode.md` before touching anything.** It carries the two passes, the default scope, the notation for a superseded or dead-linked finding, and the split between what review may write and what it must only report. Don't improvise it: the whole mode turns on writing provenance changes while never grading a source, and that line is easy to cross by accident.
+
+Never fold a review into a research run. If the sweep turns up something new about the *topic* rather than about a *claim already in the doc*, that's research — say so and stop.
 
 ## Workflow
 
@@ -114,33 +129,65 @@ Use this template. Every section is required — an empty one says "None" and wh
 
 ## Summary
 
-<Short and plain — ≤200 words across all three subsections. This is the only section allowed to restate what's below it, and it originates nothing: no claim, position, or action appears here for the first time. A reader who stops here knows what this is for, what's believed, and what's known. No undefined terms, no citations, no evidence talk.>
+<Short and plain across both subsections. This is the only section allowed to restate what's below it, and it originates nothing: no claim, position, or action appears here for the first time. A reader who stops here knows what this is for, what's believed, and what's known. **Labels carry the vocabulary; prose explains it.** The title, the tagline, and the claim-group names are handles — what someone searches for, cites in a commit message, and remembers the doc by — so they should use the topic's own terms, and a title that dodges the term is harder to find and says less. Everything that *isn't* a label is plain: no word the doc coins further down, no citations, no evidence talk. A term first appears in a label and is explained in the sentence beneath it, which is the one place in the doc where naming and defining sit together.>
 
 ### Goal
 
 <One or two sentences: the decision or thing-to-build this run serves. Plain language. Narrower than the charter's Objectives, which cover the whole repo; if the two read the same, the goal isn't specific enough yet. If it needs more than two sentences or splits into genuinely separate parts, it's two research docs.>
 
-### Hypotheses
+### Claims
 
-<One line each, by ID: "**H1** — <the position>". Nothing else; the entries live below.>
+<Totals first on their own line — "6 findings, 4 hypotheses" — then one **Markdown list item** per claim, every claim in the body appearing exactly once:
 
-### Findings
+**<Theme>** — <1–3 short sentences on what this group is about.>
 
-<One line each. Nothing else; the citations live below.>
+*Findings (sourced):*
+- [<the sourced claim>](#f-<slug>)
+
+*Hypotheses (unsourced):*
+- [**H1**](#h1) — <the position>
+
+**Every roll-up line links to its entry below.** The Summary is read first and travels on its own, so it doubles as the doc's index: each line is an anchor link to the full entry, and a reader who wants the caveats is one click from them rather than scanning a section of twenty. Link the ID for a hypothesis and the claim text for a finding.
+
+**Every H-ID in the doc is a link, not just the ones in the roll-up.** `Builds on:`, `Cuts against:`, an action's `Because:`, a table cell, a bare mention in interpretation prose — all of them, one rule with no exceptions to remember, and the terse references are the ones a reader most needs to resolve. **A-IDs are the deliberate exception:** actions drain out of the doc when they're built, so an action anchor is a dangling link waiting to happen, while a hypothesis ID is permanent by invariant and can always be pointed at.
+
+**Anchor on the entry, never on a heading.** Place an explicit `<a id="..."></a>` on each entry in the body. Heading-derived anchors are generated from the entry's full text, so the first time a statement is sharpened — which is what a revision run does — every link to it breaks silently, and a broken in-doc link is exactly as invisible as the stale pointer this skill bans between docs. A hypothesis anchors on its ID (`#h1`), which is permanent by invariant and so is already the right handle. A finding has no ID, so it anchors on a short slug from its distinctive term (`#f-recall-over-precision`); once written the slug is a link target, not a title — leave it alone when the claim's wording changes.
+
+**Group by theme first, then split by backing inside the group.** The theme heading is what the reader navigates by; the two sub-lists under it are what tells them how much of that theme is evidence and how much is position. A group showing one finding against five hypotheses says something a doc-wide findings list hides — splitting *within* the theme keeps that visible while dropping a per-line tag off every bullet. The hard sort still lives in the body's two sections; this is the reader's view of what the doc says.
+
+**Both labels appear in every group, even when one side is empty** — write `*Findings (sourced):* none.` A theme with no findings under it is the most useful thing this section can tell a reader, and an omitted label is invisible where a stated absence is a fact. An **absence claim** goes under Findings keeping its inline *(absence claim)* tag: a checked and recorded absence is finding-shaped, not a position.
+
+**Say sourced, not known.** The split is about backing, not certainty — findings include practitioner claims and single-vendor blog posts, and labelling that column "known" launders sourcing into truth, which is the one failure this whole structure exists to prevent.
+
+**The group name may carry the topic's terms; the sentence under it may not.** Name the group in the doc's own vocabulary — it's a handle, and a vague one makes the group unfindable. Then explain it in words a reader meeting the topic for the first time already knows, so the sentence carries any term the name just introduced. Say what the group is about and stop: no counts (the sub-lists already show backing) and no grading, because "weakly grounded" is a strength rating this skill doesn't make.
+
+A list, not consecutive bold lines: bare lines collapse into one paragraph when rendered.>
 
 ## Key findings
 
 Sourced claims only. Every bullet cites an external primary source — a bullet with nothing to cite is a hypothesis and belongs in the next section.
 
-- **<Short claim>** ([source](url)) — 1–3 sentences explaining the finding.
-- **<Short claim>** ([source](url)) — ...
-- **<Short claim, no source exists>** *(absence claim)* — "no published benchmark exists"; uncitable by nature, so label it rather than leaving it bare.
+A citation is **necessary but not sufficient**. It buys the reader a way to check, not a guarantee the claim is right: a badly-sourced claim cited faithfully is still a badly-sourced claim, and it sits here looking exactly like a well-sourced one. That gap is what Phase 2's verification pass exists to close, so carry its caveats inline — "paper-body detail, not independently verified here" belongs in the bullet, not in your head.
+
+- <a id="f-slug"></a>**<Short claim>** ([source](url)) — 1–3 sentences explaining the finding.
+- <a id="f-slug"></a>**<Short claim>** ([source](url)) — ...
+- <a id="f-slug"></a>**<Short claim, no source exists>** *(absence claim)* — "no published benchmark exists"; uncitable by nature, so label it rather than leaving it bare.
 
 ## Hypotheses
 
 Positions developed with the user rather than found in literature: unmeasured, and the reason the Actions below are worth taking. IDs are permanent — assigned once, never renumbered, never reused. New ones append.
 
-**H1 — <the position, one sentence>** · *open* · added YYYY-MM-DD
+**One hypothesis per distinct check.** Granularity is a real choice and permanence makes it irreversible, so use the check as the test: if two positions would be settled by the same experiment, they are one hypothesis with a longer statement, not two. Writing "*Check:* same as H3" means the split was wrong. Err toward fewer — a corollary folded into its parent still gets read, but a doc with thirty IDs has a roll-up nobody finishes.
+
+**A split that turns out to be wrong gets merged, not left.** Fold the vaguer statement into the sharper one — the survivor has to carry both positions, so it usually gets longer, and it keeps the ID whose `Check:` was the real experiment. The vacated ID stays in place as a single line: `**H5 — Retired YYYY-MM-DD, merged into H18.** <what it stated, and why it was never separate.>` That line is required by ID permanence, not kept as history — an ID deleted outright reads as a numbering slip to the next reader and invites reuse. Then strip the dead ID from every `Because:` and `Builds on:` that named it, and from the Summary roll-up: two IDs behind one action read as two supports when there was only ever one.
+
+**State the theory, not the task.** A hypothesis is a proposition about how something works, readable by someone who has never opened this repo. "Add `Extend by:` and `Doesn't cover:` fields to FOUNDATIONS entries" is an Action; the hypothesis under it is the reason — *a component doc that only describes what exists cannot tell an agent where building something new is correct.* One is checkable by anyone; the other is checkable by looking at whether you did it. Project nouns and file names belong in Actions, which are written for an agent with the repo open. Diagnostic: **if the `Check:` tests something more general than the statement, the statement is too narrow** — rewrite the statement up to meet it.
+
+**Group them once there are more than about eight.** Thematic `###` subheadings inside this section, mirrored in the Summary roll-up. IDs stay globally sequential in order of assignment, so they will *not* run in order within a group — that is correct, and it's what permanence costs. Never renumber to tidy it.
+
+<a id="h1"></a>**H1 — <the position, one sentence>** · *open* · added YYYY-MM-DD
+- **Builds on:** <optional — the finding this position extends, cited, or the linked H-ID it specialises. Omit when it stands on its own. Provenance, not ranking: it records what the position was assembled from, which is what stops the two halves being welded into one composite sentence where half is checkable and half isn't.>
+- **Cuts against:** <optional — a finding or H-ID this position is in tension with. Evidence that *undercuts without settling* has to live somewhere, or it leaks into interpretation prose; two hypotheses that can't both be right have to say so, or the doc quietly holds a contradiction. Not a refutation and not a score. If a source **settles** it against, the position isn't a hypothesis any more — move it to Decisions with the citation and the reason.>
 - **Unsourced because:** <what you searched and didn't find, from Phase 2. "No literature on the ratio" is a real answer; "didn't look" is not.>
 - **Check:** <the concrete thing that would validate or refute it — specific enough to run.>
 
@@ -151,8 +198,10 @@ Positions developed with the user rather than found in literature: unmeasured, a
 Three statuses, and only three:
 
 - ***open*** — untested.
-- ***validated in-project*** / ***refuted in-project*** — the check ran; record what happened. This does **not** make it a finding. A finding is something a reader verifies by clicking a link, and the stand-alone rule means the next doc can only import this one, never cite it.
-- ***promoted to finding*** — an external verified source turned up. Move the claim into Key findings with its citation and leave a one-line pointer here. Only an external source can do this.
+- ***validated in-project*** / ***refuted in-project*** — the check ran; record what happened. A result is not backing, so the status changes and the claim stays here.
+- ***promoted to finding*** — an external verified source turned up. Move the claim into Key findings with its citation and leave a one-line pointer here.
+
+A retired ID carries no status, because it is no longer a claim.
 
 **Imported positions.** A position developed in an earlier doc under `docs/research/` exists nowhere else, so carry it into this one rather than losing it — but carry the *content*, not a pointer:
 
@@ -160,9 +209,9 @@ Three statuses, and only three:
 - **Unsourced because:** Position developed in `<origin-slug>-research.md` (H3); searched <what> for external work on it, found none.
 - **Check:** <the concrete check> — ran there → <outcome>; not re-run in this context.
 
-Four constraints, and they're what keep the import honest. It gets a **new ID in this doc's sequence** — never the origin's number, since IDs are local and permanent. Its status **starts at *open***: the origin's outcome is history recorded on the `Check:` line, not a status this doc asserts, so two copies can't drift into two live statuses. Its **citations don't come along** — chase those to their primaries. And an import is **a hypothesis by definition**: the origin doc, whatever it says and however long it has said it, can never move a claim into Key findings.
+Three constraints keep the import honest. It gets a **new ID in this doc's sequence** — never the origin's number, since IDs are local and permanent. Its status **starts at *open***: the origin's outcome is history recorded on the `Check:` line, not a status this doc asserts, so two copies can't drift into two live statuses. And its **citations don't come along** — chase those to their primaries. That an import stays a hypothesis needs no fourth rule: the origin doc isn't backing, however long it has said otherwise.
 
-A hypothesis with no Action pointing at it doesn't belong in this section — you hold a position but have no stake in it. That's an Open question.
+An ***open*** hypothesis with no Action pointing at it doesn't belong in this section — you hold a position but have no stake in it. That's an Open question.
 
 ## How this applies to your request
 
@@ -173,7 +222,7 @@ A hypothesis with no Action pointing at it doesn't belong in this section — yo
 <What to do to meet the Goal. Written for an agent implementing from this section alone: name the file or component and state the change.>
 
 - **A1 — <the change; name the file or component>** · *proposed*
-  **Because:** H1, [source](url)
+  **Because:** [H1](#h1), [source](url)
 - **A2 — <the change>** · *building*
   **Because:** [source](url)
 
@@ -198,14 +247,15 @@ Actions are a queue, not a record. Once an action is built and its hypothesis ha
 <Gaps you couldn't close, contested claims between sources, follow-ups worth pursuing later. This is the home for questions you hold no position on — take a position and it's a hypothesis; act on it and it's an action. Honesty here is more valuable than fake completeness.>
 ```
 
-**Before you report the path, check the structure.** Six checks, all mechanical:
+**Before you report the path, check the structure.** Seven checks, all mechanical:
 
-1. All eight `##` headings present, in order, plus the Summary's three subsections. An empty one says "None" and why.
+1. All eight `##` headings present, in order, plus the Summary's Goal and Claims subsections. An empty one says "None" and why. Every claim in the body appears once in the Claims roll-up — a compressed roll-up is a second, quieter doc — and every roll-up link resolves to an `<a id>` that exists, since a dangling one sends the reader to the top of the file with no error.
 2. Every action has a non-empty `Because:`.
-3. Every hypothesis is named by at least one action's `Because:`. If not, it moves to Open questions.
+3. Every ***open*** hypothesis is named by at least one action's `Because:`, or by another hypothesis's `Builds on:`. If neither, it moves to Open questions. A thesis-level position earns its place by carrying children, not by being built directly. Resolved ones stay put — their action has already drained, and the entry is the record.
 4. Nothing in Key findings lacks a citation or an absence-claim label.
 5. No claim, position, or action appears in two sections. The Summary is the exception — it restates by design.
-6. Nothing depends on a sibling doc. A sibling may be named in exactly two places — the attribution inside an imported hypothesis's `Unsourced because:` and `Check:` lines — and nowhere else: not in Sources, not in a Key finding, not in an action's `Because:`, and never as a Markdown link. (The header's **Charter:** pointer is the one exception, and it backs nothing.) Every import must read correctly with the origin file deleted.
+6. No two ***open*** hypotheses resolve on the same check. A `Check:` that defers to another ID ("see H18") or restates it verbatim is one position wearing two numbers — merge it. Borrowing another check's *setup* and adding an arm is fine: that experiment has an outcome the other one doesn't read. This is the check most likely to fail on a revision run, because a position gets sharpened into a new ID while the older, vaguer one stays behind.
+7. Nothing depends on a sibling doc. A sibling may be named in exactly two places — the attribution inside an imported hypothesis's `Unsourced because:` and `Check:` lines — and nowhere else: not in Sources, not in a Key finding, not in an action's `Because:`, and never as a Markdown link. (The header's **Charter:** pointer is the one exception, and it backs nothing.) Every import must read correctly with the origin file deleted.
 
 ### Phase 5 — Charter reconciliation
 
@@ -224,7 +274,7 @@ Runs *after* the doc is on disk, never before. A charter edit made first would c
 ## Output principles
 
 - **Cite inline.** Every claim derived from research links to its source. The reader should be able to verify any specific point in one click.
-- **Separate findings from hypotheses, and only a source moves one across.** Every claim either cites an external primary source or lives in the Hypotheses section as a position developed with the user — unmeasured, to be validated. Never let the two blend: a fluent unsourced claim reads as fact and will be treated as one by every future reader, human or agent. Absence-of-evidence claims ("no published benchmark exists") are uncitable by nature — label them as absence claims rather than leaving them bare. **Promotion is one-directional and source-gated:** a hypothesis becomes a finding only when an external verified source turns up. The user's own experiment doesn't promote it — that's *validated in-project*, which stays in Hypotheses, because a finding is something the reader checks by clicking and the stand-alone rule lets the next doc import this only as a hypothesis, never cite it as evidence.
+- **Keep the sort visible on the page.** A fluent unsourced claim reads as fact and will be treated as one by every future reader, human or agent — the sort protects nobody unless it's legible claim by claim. Absence-of-evidence claims ("no published benchmark exists") have no source by nature: label them as absence claims rather than leaving them bare.
 - **Each section owns exactly one thing.** Overlap is what let the last generation of these docs say the same thing four times in four voices. *Key findings* owns sourced claims. *Hypotheses* owns unsourced positions. *How this applies* owns interpretation — no new claims, no build steps. *Actions* owns build steps — no argument, no evidence. *Decisions* owns what was ruled out. *Open questions* owns what has no position yet. *Summary* may restate anything and originates nothing. When a sentence would fit two sections, it belongs to the narrower one and the other section points at it by ID.
 - **The doc must stand alone.** Never cite other research docs previously written in this project — they are conclusions, not sources: possibly unverified, and revised in place, so a pointer to one goes stale without anyone seeing it. A prior doc never appears in the Sources table and never backs a Key finding. Two things follow. **Never relay its citations:** mine it for *leads*, chase each lead to its primary source, cite that. If the primary can't be verified, the claim inherits hypothesis or absence-claim status. **Import its original positions instead of pointing at them:** a hypothesis developed with the user exists nowhere but that doc, so restate it here in full as a new local hypothesis naming the origin as attribution, never as a dependency. Delete the origin and this doc still reads correctly — that's the test for whether it stands alone.
 - **The Actions section is the spine, not the appendix.** The research exists to back the actions the user wants to take; everything else is that backing. Write the doc so Actions could be lifted out and executed, and so every other section is traceable to something in it.
@@ -243,7 +293,7 @@ Runs *after* the doc is on disk, never before. A charter edit made first would c
 - Don't take a pasted or prior research doc's citations at face value — verify the load-bearing ones against the actual sources. LLM-generated research in particular can carry plausible, fully fabricated references (specific paper titles, quantitative findings, org attributions); the most confident-looking citation is sometimes the fake one.
 - Don't ship a doc full of `[TODO]` markers. If a section has nothing in it, write "None" and one line saying why — never delete the heading. A missing section is invisible; a stated absence is a fact.
 - Don't leave an action with an empty `Because:` line. It means an unwritten belief is doing the work. Write the hypothesis or drop the action.
-- Don't promote a hypothesis on the strength of your own reasoning, however good the argument. Only an external verified source moves it to Key findings; a plausible mechanism argued from first principles is exactly what these markers exist to contain.
+- Don't promote a hypothesis on the strength of your own reasoning, however good the argument. A plausible mechanism argued from first principles is exactly what these markers exist to contain.
 - Don't replace or fork an existing research doc on the same topic. Revise in place — the accumulated hypotheses and their statuses are the record, and a dated copy just creates two docs that both look current.
 - Don't renumber H or A IDs, ever. Other sections, later docs, and commit messages point at them.
 - Don't cross-link research docs. Importing a prior doc's position means restating it in full as a new local hypothesis; a live pointer to `<other>-research.md` breaks the next time that doc is revised in place, and the claim is then resting on nothing.

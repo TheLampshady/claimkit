@@ -18,6 +18,7 @@ This repo distributes one skill as a **Claude plugin**, an **Antigravity plugin*
 |------|---------|
 | `skills/claimkit/SKILL.md` | The whole skill — phases 1–5, the output template, output principles |
 | `skills/claimkit/references/charter-template.md` | Charter field spec + interview; loaded only in charter mode |
+| `skills/claimkit/references/review-mode.md` | Two-pass re-check of an existing doc's claims; loaded only in review mode |
 | `.claude-plugin/` | Claude plugin metadata (`plugin.json`) and marketplace catalog (`marketplace.json`) |
 | `plugin.json` | **Antigravity** plugin manifest (root) — separate file and schema from `.claude-plugin/plugin.json` |
 | `rules/` | Antigravity markdown rules (guidance, not enforcement) |
