@@ -4,7 +4,7 @@ Research a concept, then write it down so it's still trustworthy a year later.
 
 | | |
 |---|---|
-| **Output** | `docs/research/<topic>-research.md` |
+| **Output** | `docs/research/<topic>-research.md` in a repo · a Markdown artifact in chat |
 | **Modes** | research (default) · charter setup |
 | **Triggers** | "research X", "look into X", "get me up to speed on X", "find sources on X", `/claimkit <topic>` |
 | **Skip when** | "what is X?" (just answer) · "show me the API for X" (docs lookup) · "find a library that does X" |
@@ -42,3 +42,4 @@ Actions are a queue, not a record: they leave the list once built and resolved, 
 
 - `SKILL.md` — the whole skill; always loaded
 - `references/charter-template.md` — six fields, four-step interview, drafted defaults; loaded only in charter mode
+- `references/chat-output.md` — repo locations mapped to chat (artifact, Project knowledge); loaded only with no repo

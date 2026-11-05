@@ -6,15 +6,14 @@ Most research docs rot because they blend two kinds of statement: things a sourc
 
 Claimkit keeps them apart. Every claim it writes is a **finding** with a citation or a **hypothesis** with the check that would settle it. Actions name their backing, so what you built is traceable to why you believed it would work — and when a hypothesis turns out wrong, the actions resting on it are already listed.
 
-Output goes to `docs/research/<topic>-research.md`. There's no separate database, no ticket integration, and nothing to install into the project being researched.
+In a repo, output goes to `docs/research/<topic>-research.md`. In a chat with no repo (claude.ai), the same doc arrives as a Markdown artifact that you keep and bring back. There's no separate database, no ticket integration, and nothing to install into the project being researched.
 
 ## Quickstart
 
-**Claude Code** — install from the marketplace in this repo:
+**Claude Code**: install in one line. The marketplace in this repo is added first if you don't already have it:
 
 ```bash
-claude plugin marketplace add TheLampshady/claimkit
-claude plugin install claimkit@claimkit-marketplace
+claude plugin install claimkit --marketplace TheLampshady/claimkit
 ```
 
 **Antigravity IDE** — the repo root *is* the plugin, so place it in the global plugin dir. Symlinking a clone instead of copying means edits reload live:
@@ -31,6 +30,15 @@ Restart the IDE, then mention `claimkit` to confirm the skill loads.
 ```bash
 agy plugin install ./claimkit
 ```
+
+**Claude (claude.ai and desktop)**: zip the skill folder and upload it under Settings → Capabilities → Skills. Code execution needs to be on.
+
+```bash
+git clone https://github.com/TheLampshady/claimkit.git
+cd claimkit/skills && zip -r claimkit.zip claimkit
+```
+
+With no repo to write into, the doc arrives as a Markdown artifact. Run it inside a **Project** and keep the doc in the Project's knowledge, replacing the old copy after each run. That way the next run can revise it in place, and a `CHARTER.md` kept there is picked up the same way.
 
 Then ask for research in any of these. **Copilot** also discovers `skills/claimkit/SKILL.md` from the plugin root; on every platform the skill activates from its description, so there's nothing to wire up per project.
 
@@ -81,6 +89,7 @@ Three fields are asked, three are drafted for approval. The charter is read for 
 |------|---------|
 | `skills/claimkit/SKILL.md` | The skill — entry point, phase flow, output template |
 | `skills/claimkit/references/charter-template.md` | Charter field spec and interview, loaded only in charter mode |
+| `skills/claimkit/references/chat-output.md` | Where the doc, charter, and siblings live with no repo; loaded only in chat |
 | `.claude-plugin/` | Claude plugin manifest + marketplace catalog |
 | `plugin.json` | Antigravity plugin manifest (root; separate schema from Claude's) |
 | `rules/` | Antigravity markdown rules — guidance, not enforcement |

@@ -1,6 +1,6 @@
 ---
 name: claimkit
-description: 'Research a concept thoroughly by doing web searches and interviewing the user to align findings with their specific goal, then write a structured reference document at docs/research/<concept>-research.md. Use this skill whenever the user asks to: research X, look into X, get up to speed on X, learn about X for a project, write up findings on X, find sources on X, or do homework on a topic. Especially trigger when the request is open-ended and the user has a specific situation (scale, stack, constraints, deadline) the findings need to align with — that alignment work is the point. Also has a charter setup mode — use when asked to set up a research charter, define research goals or scope or rails for a repo, or update the charter — and a review mode, for: recheck the sources, is this doc still accurate, has anything been proven since. Skip for one-shot "what is X" questions you can answer directly without sources, and skip for library-API lookups where a documentation lookup alone is sufficient.'
+description: 'Research a concept thoroughly by doing web searches and interviewing the user to align findings with their specific goal, then write a structured reference doc (docs/research/ in a repo, a Markdown artifact in chat). Use whenever the user asks to: research X, look into X, get up to speed on X, learn about X for a project, write up findings on X, find sources on X, or do homework on a topic. Especially trigger when the request is open-ended and the user has a specific situation (scale, stack, constraints, deadline) the findings need to align with — that alignment work is the point. Also has a charter setup mode — use when asked to set up a research charter, define research goals or scope or rails for a repo, or update the charter — and a review mode, for: recheck the sources, is this doc still accurate, has anything been proven since. Skip for one-shot "what is X" questions you can answer directly without sources, and skip for library-API lookups where a documentation lookup alone is sufficient.'
 user-invocable: true
 argument-hint: "[topic | charter | review]"
 ---
@@ -28,6 +28,12 @@ Skip when:
 - "What is X?" — just answer directly, no doc needed
 - "Show me the API for X" — a docs lookup, not a research task
 - "Find a library that does X" — search-and-recommend, not a deep concept dive
+
+## Where the doc lives
+
+Everything below is written for a repo. The doc is `docs/research/<slug>-research.md`, the charter is `docs/research/CHARTER.md`, and sibling docs are the other files in that folder. When you're working in the user's project, meaning a directory they opened that you can write into, follow it as written.
+
+When there's no such project, as in a claude.ai chat (a code-execution sandbox doesn't count), **read `references/chat-output.md` before Phase 1.** It maps each repo location to its chat equivalent, starting with the doc itself, which becomes a Markdown artifact. Nothing else changes: same template, same rules, same checks.
 
 ## The charter (optional, per-repo)
 
