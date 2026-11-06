@@ -67,7 +67,7 @@ Draft from the repo: license file, package manifests, `CLAUDE.md`/`AGENTS.md`, p
 
 ### 5. Standard of evidence
 
-What a claim must clear before the doc treats it as actionable, and what to do when nothing clears it. Answer four things: which source types count and in what order; whether a single vendor blog is enough to recommend on; whether absence of evidence blocks a recommendation or just gets labeled; how hard to verify the load-bearing claims.
+What a claim must clear before the doc treats it as actionable, and what to do when nothing clears it. Answer four things: which source types count and in what order (Phase 2's ranked list is the default, so state an order only to change it); whether a single vendor blog is enough to recommend on; whether absence of evidence blocks a recommendation or just gets labeled; how hard to verify the load-bearing claims.
 
 Not derivable — but don't ask cold. Offer this and let the user edit:
 

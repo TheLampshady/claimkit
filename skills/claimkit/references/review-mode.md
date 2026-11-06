@@ -34,13 +34,13 @@ For each finding in scope, fetch its cited source and answer three questions in 
 If not, try an archived copy. An archived version that supports the claim keeps the finding — swap the citation to the archive and note the original is gone. If nothing resolves, the claim fails the definition of a finding: a reader can no longer check it by clicking. **Move it to Hypotheses** with a new ID, status *open*, and an `Unsourced because:` line recording the dead source and what was searched for a replacement. This is the one demotion in the skill, and it is not a judgment — it is the definition applying itself.
 
 **2. Does the source still say what the bullet claims?**
-Living pages get edited, papers get revised, docs get versioned. If the source no longer supports the bullet, rewrite the bullet to what the source actually says. If it now says the opposite, that is a contradiction — **report it, do not write it** (see below).
+Living pages get edited, papers get revised, docs get versioned. If the source still supports the bullet, set the finding's marker to *verified*: the source was just read. If the source no longer supports the bullet, rewrite the bullet to what the source actually says. If it now says the opposite, that is a contradiction — **report it, do not write it** (see below).
 
 **3. Is there newer work that supersedes it?**
 One search per load-bearing finding. Newer work that *replaces* the basis for the claim gets appended inline, in the same voice as the doc's other caveats:
 
 ```markdown
-- **<the claim>** ([source](url)) — <explanation>. **Superseded 2026-08-06** by
+- **<the claim>** ([source](url)) · *verified* — <explanation>. **Superseded 2026-08-06** by
   [newer work](url), which <what changed>.
 ```
 

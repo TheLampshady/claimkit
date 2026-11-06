@@ -84,20 +84,23 @@ Three questions max. If their initial request already tells you the answer to on
 
 Use **WebSearch** for discovery and **WebFetch** for reading the most promising results. If the topic involves a library, framework, or SDK, fetch its official documentation directly — it's more current and authoritative than write-ups about it.
 
-Quality over quantity. Aim for 5–8 strong sources rather than 20 shallow ones. Prefer:
-- Official docs and specifications
-- Well-regarded practitioner blog posts (look for credentialed authors, working examples)
-- Conference talks and papers (foundational concepts)
-- Well-maintained open-source examples
+Quality over quantity. Aim for 5–8 strong sources rather than 20 shallow ones. Rank them in this order, highest first:
+
+1. **Official:** docs, specifications, standards, and the code or dataset itself.
+2. **Research:** peer-reviewed papers and reproducible benchmarks.
+3. **Practitioner:** credentialed authors with working examples, conference talks, well-maintained open-source examples.
+4. **Vendor:** a company's claims about its own product. A lead, not a basis: chase it to something higher before an action rests on it.
+
+The charter's Standard of evidence overrides this order when it states one. The rank does two jobs: when several sources support a claim, cite the highest; and it's the bar a claim clears before an action rests on it. It is not printed on the claim as a grade. The Sources table's `Type` column records each source's tier, which is a fact about what the source is, not a judgment of how good it is.
 
 Skip:
 - SEO content farms and listicles
 - AI-recycled summaries (you'll see the same paragraphs verbatim across sites)
 - Sources that contradict the consensus without evidence
 
-Take notes as you go: URL, the key claim, and your confidence in the source.
+Take notes as you go: URL, the key claim, its tier, and whether you read the claim in the source itself.
 
-**Verify the load-bearing claims.** Identify the 2–3 claims the conclusion will rest on and confirm them against their primary sources — not a summary of the source, the source itself. If you could only confirm an abstract or a secondhand account, keep the citation but mark it inline ("paper-body detail, not independently verified here"). This is claim verification, not hypothesis testing — it needs no building, just reading, and it's what catches fabricated or drifted citations before they become load-bearing.
+**Verify the load-bearing claims.** Identify the 2–3 claims the conclusion will rest on and confirm them against their primary sources — not a summary of the source, the source itself. If you could only confirm an abstract or a secondhand account, keep the citation and mark the finding *unverified* (see Key findings). This is claim verification, not hypothesis testing — it needs no building, just reading, and it's what catches fabricated or drifted citations before they become load-bearing.
 
 **Check whether the user's hypotheses are already tested.** Before a working position gets marked **(project hypothesis)**, spend one search seeing if the literature already validates or refutes it. If it does, it's not a hypothesis — it's a finding (or a dead idea), cited like any other, and the user just saved an experiment. Record what you searched: it becomes the hypothesis's **Unsourced because** line.
 
@@ -173,10 +176,15 @@ A list, not consecutive bold lines: bare lines collapse into one paragraph when 
 
 Sourced claims only. Every bullet cites an external primary source — a bullet with nothing to cite is a hypothesis and belongs in the next section.
 
-A citation is **necessary but not sufficient**. It buys the reader a way to check, not a guarantee the claim is right: a badly-sourced claim cited faithfully is still a badly-sourced claim, and it sits here looking exactly like a well-sourced one. That gap is what Phase 2's verification pass exists to close, so carry its caveats inline — "paper-body detail, not independently verified here" belongs in the bullet, not in your head.
+A citation is **necessary but not sufficient**. It buys the reader a way to check, not a guarantee the claim is right: a badly-sourced claim cited faithfully is still a badly-sourced claim, and it sits here looking exactly like a well-sourced one. That gap is what Phase 2's verification pass exists to close, so every sourced finding carries one of two markers after its citation:
 
-- <a id="f-slug"></a>**<Short claim>** ([source](url)) — 1–3 sentences explaining the finding.
-- <a id="f-slug"></a>**<Short claim>** ([source](url)) — ...
+- ***verified***: the claim was read in the cited source itself during this run or a review.
+- ***unverified: <what was seen>***: the citation rests on something less than the source itself: an abstract, a summary, a secondhand account, a page that wouldn't load. Name what was seen, so the next reader knows what to fetch.
+
+**Verified means the source says this, not that the claim is true.** It's a fact about the citation, which is why it's allowed where a strength rating isn't: anyone can re-check it by reading the source. A verified citation to a vendor blog is still a vendor blog. The tier lives in the Sources table, and the two never merge into one score.
+
+- <a id="f-slug"></a>**<Short claim>** ([source](url)) · *verified* — 1–3 sentences explaining the finding.
+- <a id="f-slug"></a>**<Short claim>** ([source](url)) · *unverified: abstract only* — ...
 - <a id="f-slug"></a>**<Short claim, no source exists>** *(absence claim)* — "no published benchmark exists"; uncitable by nature, so label it rather than leaving it bare.
 
 ## Hypotheses
@@ -246,7 +254,7 @@ Actions are a queue, not a record. Once an action is built and its hypothesis ha
 
 | Source | Type | Why it matters |
 |--------|------|----------------|
-| [Title](url) | Official spec / blog / talk / paper | Brief annotation — what this contributed |
+| [Title](url) | Official / Research / Practitioner / Vendor: the Phase 2 tier, or the charter's if it ranks differently | Brief annotation — what this contributed |
 
 ## Open questions
 
@@ -258,7 +266,7 @@ Actions are a queue, not a record. Once an action is built and its hypothesis ha
 1. All eight `##` headings present, in order, plus the Summary's Goal and Claims subsections. An empty one says "None" and why. Every claim in the body appears once in the Claims roll-up — a compressed roll-up is a second, quieter doc — and every roll-up link resolves to an `<a id>` that exists, since a dangling one sends the reader to the top of the file with no error.
 2. Every action has a non-empty `Because:`.
 3. Every ***open*** hypothesis is named by at least one action's `Because:`, or by another hypothesis's `Builds on:`. If neither, it moves to Open questions. A thesis-level position earns its place by carrying children, not by being built directly. Resolved ones stay put — their action has already drained, and the entry is the record.
-4. Nothing in Key findings lacks a citation or an absence-claim label.
+4. Nothing in Key findings lacks a citation or an absence-claim label, and every cited finding carries *verified* or *unverified: …*.
 5. No claim, position, or action appears in two sections. The Summary is the exception — it restates by design.
 6. No two ***open*** hypotheses resolve on the same check. A `Check:` that defers to another ID ("see H18") or restates it verbatim is one position wearing two numbers — merge it. Borrowing another check's *setup* and adding an arm is fine: that experiment has an outcome the other one doesn't read. This is the check most likely to fail on a revision run, because a position gets sharpened into a new ID while the older, vaguer one stays behind.
 7. Nothing depends on a sibling doc. A sibling may be named in exactly two places — the attribution inside an imported hypothesis's `Unsourced because:` and `Check:` lines — and nowhere else: not in Sources, not in a Key finding, not in an action's `Because:`, and never as a Markdown link. (The header's **Charter:** pointer is the one exception, and it backs nothing.) Every import must read correctly with the origin file deleted.
